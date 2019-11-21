@@ -1,6 +1,7 @@
 const request = require('request');
 const cheerio = require('cheerio');
 const dateFormat = require('dateformat');
+const fs = require('fs');
 
 
 
@@ -121,6 +122,7 @@ request('https://www.whitehouse.gov/', (error,response, html)=> {
 
     /*From head */
     title = $('head title').text();
+    console.log("File updated" + getFileUpdatedDate('https://www.whitehouse.gov/'));
 
 
     console.log(description);
@@ -128,6 +130,22 @@ request('https://www.whitehouse.gov/', (error,response, html)=> {
     console.log("ERROR")
   }
 });
+
+
+const getFileUpdatedDate = (url) => {
+  const stats = fs.statSync(url);
+  return stats.mtime
+};
+
+
+// function getSourceAsDOM(url)
+// {
+//   let xmlhttp = new XMLHttpRequest();
+//   xmlhttp.open("GET",url,false);
+//   xmlhttp.send();
+//   parser=new DOMParser();
+//   return parser.parseFromString(xmlhttp.responseText,"text/html");
+// }
 
 
 
